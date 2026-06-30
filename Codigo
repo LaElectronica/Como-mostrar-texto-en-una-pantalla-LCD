@@ -1,0 +1,55 @@
+//@LaElectronicaGT
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+//Dirección del LCD 0x3F y 16 columnas x 2 filas
+//La dirección por defecto del módulo suele ser 0x27
+//también puede ser 0x3F
+LiquidCrystal_I2C lcd(0x3F, 16, 2);
+
+byte cuerpo[8] = {
+  B01110,
+  B01110,
+  B00100,
+  B11111,
+  B00100,
+  B01010,
+  B10001,
+  B00000,
+};
+
+void setup() {
+  // Inicializar el LCD
+  lcd.init();
+  lcd.backlight();
+}
+
+void loop() {
+
+  // Ubicamos el cursor en la primera
+  // posición (columna:0) de la primera línea (fila:0)
+  lcd.setCursor(0, 0);
+
+  // Escribimos el mensaje en el LCD
+  lcd.print("Hola");
+
+  // Ubicamos el cursor en la primera
+  // posición (columna:0) de la segunda línea (fila:1)
+  lcd.setCursor(0, 1);
+
+  // Escribimos el mensaje
+  lcd.print("mundo :D");
+
+  delay(2000);
+  lcd.clear();
+
+  // Creamos el nuevo carácter
+  lcd.createChar(1, cuerpo);
+
+  // Escribimos el carácter en el LCD
+  lcd.setCursor(7, 0);
+  lcd.write(byte(1));
+
+  delay(2000);
+  lcd.clear();
+}
